@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Competitive Swimming Trivia Game</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f4f8;
+      color: #333;
+      padding: 40px 20px;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      color: #005691;
+      border-bottom: 3px solid #005691;
+      padding-bottom: 10px;
+      margin-bottom: 40px;
+    }
+
+    .nav-links {
+      margin-bottom: 20px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      margin: 0 15px;
+      color: #007b9e;
+      font-weight: bold;
+      font-size: 1em;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .question {
+      font-size: 1.3em;
+      margin: 30px 0 20px;
+      color: #004a70;
+    }
+
+    .choices button {
+      display: block;
+      margin: 10px auto;
+      padding: 12px 24px;
+      font-size: 1em;
+      background-color: #007b9e;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .choices button:hover {
+      background-color: #005f76;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    #finalScore {
+      margin-top: 20px;
+      font-size: 1.5em;
+      color: #006400;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="post.html">Blog</a>
+  </div>
+
+  <h1>Competitive Swimming Trivia Game</h1>
+
+  <div class="question" id="question"></div>
+  <div class="choices" id="choices"></div>
+  <div id="result"></div>
+  <div id="finalScore"></div>
+
+  <script>
+    const questions = [
+      {
+        question: "How many meters is an Olympic swimming pool?",
+        choices: ["25 meters", "50 meters", "100 meters", "75 meters"],
+        answer: "50 meters"
+      },
+      {
+        question: "Which stroke is swum first in the individual medley?",
+        choices: ["Butterfly", "Backstroke", "Breaststroke", "Freestyle"],
+        answer: "Butterfly"
+      },
+      {
+        question: "How many strokes are there in competitive swimming?",
+        choices: ["3", "4", "5", "6"],
+        answer: "4"
+      },
+      {
+        question: "What is the shortest event in Olympic swimming?",
+        choices: ["50m Freestyle", "100m Backstroke", "100m Freestyle", "50m Butterfly"],
+        answer: "50m Freestyle"
+      },
+      {
+        question: "Which stroke is not allowed in medley relays?",
+        choices: ["Freestyle", "Breaststroke", "Butterfly", "All are allowed"],
+        answer: "All are allowed"
+      },
+      {
+        question: "What does IM stand for in swimming?",
+        choices: ["Individual Match", "Instant Motion", "Individual Medley", "Intermediate Meet"],
+        answer: "Individual Medley"
+      },
+      {
+        question: "How many lengths of a 50m pool are in a 200m race?",
+        choices: ["2", "4", "6", "8"],
+        answer: "4"
+      },
+      {
+        question: "Which stroke requires swimmers to touch the wall with both hands simultaneously during a turn?",
+        choices: ["Freestyle", "Butterfly", "Backstroke & Freestyle", "Breaststroke & Butterfly"],
+        answer: "Breaststroke & Butterfly"
+      },
+      {
+        question: "In what year were swimming goggles first allowed in the Olympics?",
+        choices: ["1956", "1968", "1976", "1984"],
+        answer: "1976"
+      },
+      {
+        question: "What is the maximum number of swimmers in a standard relay team?",
+        choices: ["2", "3", "4", "5"],
+        answer: "4"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function showQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById("question").textContent = q.question;
+      const choicesDiv = document.getElementById("choices");
+      choicesDiv.innerHTML = "";
+      document.getElementById("result").textContent = "";
+      document.getElementById("finalScore").textContent = "";
+      q.choices.forEach(choice => {
+        const btn = document.createElement("button");
+        btn.textContent = choice;
+        btn.onclick = () => checkAnswer(choice);
+        choicesDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(choice) {
+      const resultDiv = document.getElementById("result");
+      if (choice === questions[currentQuestion].answer) {
+        score++;
+        resultDiv.textContent = "✅ Correct!";
+      } else {
+        resultDiv.textContent = `❌ Wrong! The correct answer was: ${questions[currentQuestion].answer}`;
+      }
+
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        setTimeout(() => {
+          showQuestion();
+        }, 1500);
+      } else {
+        setTimeout(() => {
+          document.getElementById("question").textContent = "";
+          document.getElementById("choices").innerHTML = "";
+          resultDiv.textContent = "🎉 You've completed the trivia game!";
+          document.getElementById("finalScore").textContent = `Your final score: ${score} out of ${questions.length}`;
+        }, 1500);
+      }
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
